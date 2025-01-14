@@ -17,5 +17,5 @@ import org.springframework.stereotype.Component
 annotation class Reloadable(
     val prefix: String = "",
     val path: String = "\${application.config.dir}",
-    val filename: String = "configuration.yml"
+    val filename: String = "config.yml"
 )

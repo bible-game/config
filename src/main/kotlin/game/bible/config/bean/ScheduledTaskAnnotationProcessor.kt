@@ -1,6 +1,6 @@
 package game.bible.config.bean
 
-import game.bible.config.model.ScheduledTask
+import game.bible.config.model.scheduled.ScheduledTaskConfig
 import game.bible.config.scheduled.ScheduledJobWrapper
 import game.bible.config.watcher.ConfigurationChangedEvent
 import org.slf4j.Logger
@@ -20,7 +20,7 @@ import java.util.TimeZone
 import kotlin.collections.HashMap
 
 /**
- * Handles any [ScheduledTask] annotations
+ * Handles any [ScheduledTaskConfig] annotations
  *
  * @author J. R. Smith
  * @since 13th January 2025
@@ -28,7 +28,7 @@ import kotlin.collections.HashMap
 @Component
 class ScheduledTaskAnnotationProcessor(
     private var applicationContext: ApplicationContext,
-    private var scheduledConfig: ScheduledTask?,
+    private var scheduledConfig: ScheduledTaskConfig?,
     private var taskScheduler: TaskScheduler?,
 ) : ScheduledAnnotationBeanPostProcessor(), PriorityOrdered {
 
@@ -53,13 +53,13 @@ class ScheduledTaskAnnotationProcessor(
     @EventListener(ApplicationReadyEvent::class)
     fun configureScheduledTasks() {
         if (scheduledConfig == null) {
-            scheduledConfig = applicationContext.getBean(ScheduledTask::class.java)
+            scheduledConfig = applicationContext.getBean(ScheduledTaskConfig::class.java)
         }
         if (taskScheduler == null) {
             taskScheduler = applicationContext.getBean<TaskScheduler>(TaskScheduler::class.java)
         }
         log.debug("[ScheduledTaskAnnotationProcessor] ENTER: configureScheduledTasks")
-        val scheduledTasks: Map<String, ScheduledTask.TaskDefinition>? = (scheduledConfig as ScheduledTask).tasks
+        val scheduledTasks: Map<String, ScheduledTaskConfig.TaskDefinition>? = (scheduledConfig as ScheduledTaskConfig).tasks
         if (!scheduledTasks.isNullOrEmpty()) {
             jobs.forEach { jobId: String, job: ScheduledJobWrapper ->
                 if (jobsMap.containsKey(jobId)) {
@@ -69,7 +69,7 @@ class ScheduledTaskAnnotationProcessor(
                     super.processScheduled(job.annotation, job.method, job.bean)
                 } else {
 
-                    val taskConfig: ScheduledTask.TaskDefinition = scheduledTasks[jobId] ?: ScheduledTask.TaskDefinition(
+                    val taskConfig: ScheduledTaskConfig.TaskDefinition = scheduledTasks[jobId] ?: ScheduledTaskConfig.TaskDefinition(
                         enabled = false
                     )
                     if (taskConfig.enabled) {
@@ -84,7 +84,7 @@ class ScheduledTaskAnnotationProcessor(
         jobsTriggered = true
     }
 
-    fun scheduleTask(taskDef: ScheduledTask.TaskDefinition, jobId: String, job: ScheduledJobWrapper) {
+    fun scheduleTask(taskDef: ScheduledTaskConfig.TaskDefinition, jobId: String, job: ScheduledJobWrapper) {
         val task = Runnable {
             try {
                 job.method.invoke(job.bean)

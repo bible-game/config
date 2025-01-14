@@ -1,4 +1,4 @@
-package game.bible.config.model
+package game.bible.config.model.scheduled
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
     prefix = "game/bible/config/scheduled",
     path = "\${application.config.dir}"
 )
-class ScheduledTask(val tasks: Map<String, TaskDefinition>? = null) : Serializable {
+class ScheduledTaskConfig(val tasks: Map<String, TaskDefinition>? = null) : Serializable {
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @JsonIgnoreProperties(ignoreUnknown = true)

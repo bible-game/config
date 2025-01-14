@@ -1,6 +1,6 @@
 package game.bible.config.scheduled
 
-import game.bible.config.model.ScheduledTask
+import game.bible.config.model.scheduled.ScheduledTaskConfig
 import org.springframework.scheduling.annotation.Scheduled
 import java.util.concurrent.TimeUnit
 
@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit
  * @since 13th January 2025
  */
 class ScheduledProcess(
-    private val taskConfig: ScheduledTask.TaskDefinition,
+    private val taskConfig: ScheduledTaskConfig.TaskDefinition,
     private val scheduled: Scheduled
 ) {
 

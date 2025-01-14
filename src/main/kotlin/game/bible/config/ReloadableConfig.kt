@@ -2,7 +2,7 @@ package game.bible.config
 
 import game.bible.config.bean.ConfigBeanRepository
 import game.bible.config.bean.ConfigBeanProcessor
-import game.bible.config.model.Bible
+import game.bible.config.model.domain.BibleConfig
 import game.bible.config.watcher.ConfigWatcher
 import game.bible.config.watcher.FileWatcherService
 import org.springframework.context.ApplicationEventPublisher
@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Import
     ConfigBeanRepository::class,
     ConfigBeanProcessor::class,
     // Configuration
-    Bible::class
+    BibleConfig::class
 )
 class ReloadableConfig {
 

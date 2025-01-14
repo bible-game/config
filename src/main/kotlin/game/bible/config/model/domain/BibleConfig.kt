@@ -1,4 +1,4 @@
-package game.bible.config.model
+package game.bible.config.model.domain
 
 import game.bible.config.bean.Initialisable
 import game.bible.config.bean.Reloadable
@@ -17,7 +17,7 @@ import java.io.Serial
     path = "\${application.config.dir}",
     filename = "bible.yml"
 )
-class Bible : Initialisable {
+class BibleConfig : Initialisable {
 
     init {
         log.info("Created [{}]", this.javaClass.name)
@@ -26,11 +26,8 @@ class Bible : Initialisable {
     companion object {
         @Serial private val serialVersionUID = 874623178652743219L
 
-        private val log: Logger = LoggerFactory.getLogger(Bible::class.java)
+        private val log: Logger = LoggerFactory.getLogger(BibleConfig::class.java)
     }
-
-    private val test: String? = null
-    fun getTest() = test
 
     private val old: Map<String, Map<Int, Int>>? = null
     fun getOld() = old
