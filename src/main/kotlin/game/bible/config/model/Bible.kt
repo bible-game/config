@@ -1,12 +1,10 @@
-package game.bible.common.config
+package game.bible.config.model
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.work2net.common.config.bean.Initialisable
-import com.work2net.common.config.bean.ReloadableConfiguration
+import game.bible.config.bean.Initialisable
+import game.bible.config.bean.Reloadable
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.Serial
-import java.io.Serializable
 
 /**
  * Bible Configuration
@@ -14,8 +12,12 @@ import java.io.Serializable
  * @author J. R. Smith
  * @since 13th January 2025
  */
-@ReloadableConfig(prefix = "bible", path = "\${application.config.dir}")
-open class BibleConfig : Initialisable {
+@Reloadable(
+    prefix = "bible",
+    path = "\${application.config.dir}",
+    filename = "bible.yml"
+)
+class Bible : Initialisable {
 
     init {
         log.info("Created [{}]", this.javaClass.name)
@@ -24,22 +26,19 @@ open class BibleConfig : Initialisable {
     companion object {
         @Serial private val serialVersionUID = 874623178652743219L
 
-        private val log: Logger = LoggerFactory.getLogger(BibleConfig::class.java)
+        private val log: Logger = LoggerFactory.getLogger(Bible::class.java)
     }
 
-    private val old: Old? = null
-    open fun getOld() = old // Note: this getter is required or proxying this field fails
+    private val test: String? = null
+    fun getTest() = test
 
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    class Old : Serializable {
+    private val old: Map<String, Map<Int, Int>>? = null
+    fun getOld() = old
+    // Note: getter required to proxy this field
 
-        private val genesis: List<Int>? = null
-        fun getGenesis() = genesis
-
-        companion object {
-            @Serial
-            private val serialVersionUID = 296041764552816883L
-        }
-    }
+    private val new: Map<String, Map<Int, Int>>? = null
+    fun getNew() = new
+    // Note: getter required to proxy this field
 
 }
+
