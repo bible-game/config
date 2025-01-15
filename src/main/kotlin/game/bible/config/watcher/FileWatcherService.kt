@@ -75,30 +75,29 @@ class FileWatcherService(
                 val rootPath = keys[key]
                 log.debug("[addToMonitor] MONITORING EVENT of [{}]", rootPath)
                 for (event in key.pollEvents().stream()
-                    .map<WatchEvent<Path>> { p: WatchEvent<*>? -> p as WatchEvent<Path> }
+                    .map { p: WatchEvent<*>? -> p as WatchEvent<*> }
                     //.filter( e -> e.count() <= 2) // skip repeated events
                     .toList()) {
-
-                    log.debug("[launchMonitoring] root : [{}]; File affected [{}][{}]: [{}]", rootPath, event.hashCode(), event.count(), event.context().toFile())
-
-                    val realPath: Path = rootPath!!.resolve(event.context())
+                    log.debug("[launchMonitoring] root : [{}]; File affected [{}][{}]: [{}]", rootPath, event.hashCode(), event.count(), (event.context() as Path).toFile())
+                    val realPath: Path = rootPath!!.resolve(event.context() as Path)
                     // Following block if to skip potential duplicates FS events sent - on some OS' first event is sent for content modification and second for file's timestamp update
                     val lastModified = realPath.toFile().lastModified()
                     lastModifiedMap.computeIfAbsent(realPath.toFile().path) { f: String? -> lastModified }
                     val previousModified = lastModifiedMap[realPath.toFile().path]
                     log.trace("[launchMonitoring] Current TIMESTAMP for [{}] [{}] [{}]", realPath.toFile().path, previousModified, lastModified)
                     if (lastModified == 0L || previousModified!! <= lastModified) {
-                        eventPublisher.publishEvent(raiseFileChangedEvent(realPath, event.kind()))
+                        @Suppress("UNCHECKED_CAST")
+                        eventPublisher.publishEvent(raiseFileChangedEvent(realPath, event.kind() as WatchEvent. Kind<Path>))
                     }
 
                     lastModifiedMap[realPath.toFile().path] = System.currentTimeMillis()
 
                     // only CREATE and DELETE needs to be checked for further, recursive monitoring setup
                     if (event.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
-                        log.trace("[launchMonitoring] Recursively [{}] [{}] [{}] [{}]", rootPath, realPath.toFile(), event.context().toFile().exists(), realPath.toFile().isDirectory)
+                        log.trace("[launchMonitoring] Recursively [{}] [{}] [{}] [{}]", rootPath, realPath.toFile(), (event.context() as Path).toFile().exists(), realPath.toFile().isDirectory)
                         addToMonitor(realPath.toFile())
                     } else if (event.kind() == StandardWatchEventKinds.ENTRY_DELETE) {
-                        log.trace("[launchMonitoring] Stop monitoring [{}] [{}] [{}] [{}]", rootPath, realPath.toFile(), event.context().toFile().exists(), realPath.toFile().isDirectory)
+                        log.trace("[launchMonitoring] Stop monitoring [{}] [{}] [{}] [{}]", rootPath, realPath.toFile(), (event.context() as Path).toFile().exists(), realPath.toFile().isDirectory)
                         lastModifiedMap.remove(realPath.toFile().path)
                     }
                 }
