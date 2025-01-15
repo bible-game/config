@@ -1,7 +1,5 @@
 rootProject.name = "config"
 
-rootProject.name = "common"
-
 dependencyResolutionManagement {
     versionCatalogs {
         repositories {
