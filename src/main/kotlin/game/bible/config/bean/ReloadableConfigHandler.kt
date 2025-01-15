@@ -10,7 +10,7 @@ import java.io.Serializable
 import java.lang.reflect.Method
 
 class ReloadableConfigHandler(
-    private val type: Class<out Serializable>,
+    private val type: Class<out Any>,
     private val beanRepository: ConfigBeanRepository
 ) {
 
@@ -23,7 +23,8 @@ class ReloadableConfigHandler(
     ): Any? {
         log.trace("[intercept] Intercepted: [{}].[{}]", target.javaClass, method.name)
 
-        val configBean = beanRepository.get(type)
+        @Suppress("UNCHECKED_CAST")
+        val configBean = beanRepository.get(type as Class<out Serializable>)
         log.trace("[intercept] Calling method [{}] on root bean [{}] (if null, no root bean found)", method.name, configBean?.javaClass)
         return if (configBean != null) method.invoke(configBean, *args) else null
     }

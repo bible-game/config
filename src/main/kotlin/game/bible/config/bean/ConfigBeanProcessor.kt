@@ -65,16 +65,16 @@ class ConfigBeanProcessor(
      */
     override fun postProcessAfterInitialization(bean: Any, name: String): Any {
         val type: Class<*> = bean.javaClass
-        if (requiredAnnotation.stream().allMatch { a: Class<out Annotation?>? -> bean.javaClass.isAnnotationPresent(a) }) {
+        if (requiredAnnotation.stream().allMatch { a: Class<out Annotation?>? -> bean.javaClass.isAnnotationPresent(a!!) }) {
             return ByteBuddy()
                 .subclass(type)
                 .method(ElementMatchers.any())
                 .intercept(MethodDelegation.to(
-                    ReloadableConfigHandler(bean.javaClass as Class<out Serializable?>, beanRepository)
+                    ReloadableConfigHandler(bean.javaClass, beanRepository)
                 ))
                 .make()
                 .load(type.classLoader)
-                .getLoaded()
+                .loaded
                 .getConstructor().newInstance()
         }
 

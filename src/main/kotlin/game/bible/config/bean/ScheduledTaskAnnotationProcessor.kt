@@ -15,6 +15,8 @@ import org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProc
 import org.springframework.scheduling.support.CronTrigger
 import org.springframework.stereotype.Component
 import java.lang.reflect.Method
+import java.time.Duration
+import java.time.Instant
 import java.util.concurrent.ScheduledFuture
 import java.util.TimeZone
 import kotlin.collections.HashMap
@@ -97,10 +99,10 @@ class ScheduledTaskAnnotationProcessor(
             scheduledTask = taskScheduler!!.schedule(task, CronTrigger(taskDef.cron, TimeZone.getTimeZone(TimeZone.getDefault().id)))
             log.debug("Scheduling task with job id: [{}] and cron expression: [{}]", jobId, taskDef.cron)
         } else if (taskDef.fixedRate != null) {
-            scheduledTask = taskScheduler!!.scheduleAtFixedRate(task, taskDef.fixedRate)
+            scheduledTask = taskScheduler!!.scheduleAtFixedRate(task, Instant.now(), Duration.ofMillis(taskDef.fixedRate))
             log.debug("Scheduling task with job id: [{}] and fixed rate: [{}]", jobId, taskDef.fixedRate)
         } else if (taskDef.fixedDelay != null) {
-            scheduledTask = taskScheduler!!.scheduleWithFixedDelay(task, taskDef.fixedDelay)
+            scheduledTask = taskScheduler!!.scheduleWithFixedDelay(task, Instant.now(), Duration.ofMillis(taskDef.fixedDelay))
             log.debug("Scheduling task with job id: " + jobId + " and fixed delay: " + taskDef.fixedDelay)
         } else {
             return

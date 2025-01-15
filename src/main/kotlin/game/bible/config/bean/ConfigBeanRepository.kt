@@ -46,6 +46,7 @@ class ConfigBeanRepository {
     fun <T : Serializable?> get(type: Class<T>?): T? {
         val bean: ConfigBean<*>? = configBeans[type]
         if (bean != null) {
+            @Suppress("UNCHECKED_CAST")
             return bean.bean as T?
         }
         return null
