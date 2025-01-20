@@ -29,13 +29,12 @@ class BibleConfig : Initialisable {
         private val log: Logger = LoggerFactory.getLogger(BibleConfig::class.java)
     }
 
-    private val old: Map<String, Map<Int, Int>>? = null
+    private val old: Map<String, Map<Int, Map<String, List<Int>>>>? = null
+    private val new: Map<String, Map<Int, Map<String, List<Int>>>>? = null
+
     fun getOld() = old
-    // Note: getter required to proxy this field
-
-    private val new: Map<String, Map<Int, Int>>? = null
     fun getNew() = new
-    // Note: getter required to proxy this field
-
+    // Note: getter required to proxy fields
 }
+
 

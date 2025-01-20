@@ -15,7 +15,7 @@ import java.io.Serial
 @Reloadable(
     prefix = "bible-api",
     path = "\${application.config.dir}")
-class BibleApiConfiguration : Initialisable {
+class BibleApiConfig : Initialisable {
 
     init {
         log.info("Created [{}]", this.javaClass.name)
@@ -31,7 +31,7 @@ class BibleApiConfiguration : Initialisable {
     companion object {
         @Serial private val serialVersionUID = 874621378652743219L
 
-        private val log: Logger = LoggerFactory.getLogger(BibleApiConfiguration::class.java)
+        private val log: Logger = LoggerFactory.getLogger(BibleApiConfig::class.java)
     }
 
 }
