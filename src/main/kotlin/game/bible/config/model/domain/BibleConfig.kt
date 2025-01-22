@@ -1,10 +1,12 @@
 package game.bible.config.model.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import game.bible.config.bean.Initialisable
 import game.bible.config.bean.Reloadable
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.Serial
+import java.io.Serializable
 
 /**
  * Bible Configuration
@@ -13,9 +15,8 @@ import java.io.Serial
  * @since 13th January 2025
  */
 @Reloadable(
-    prefix = "bible",
     path = "\${application.config.dir}",
-    filename = "bible.yml"
+    filename = "bible.json"
 )
 class BibleConfig : Initialisable {
 
@@ -29,12 +30,42 @@ class BibleConfig : Initialisable {
         private val log: Logger = LoggerFactory.getLogger(BibleConfig::class.java)
     }
 
-    private val old: Map<String, Map<Int, Map<String, List<Int>>>>? = null
-    private val new: Map<String, Map<Int, Map<String, List<Int>>>>? = null
+    private val books: List<BibleBookConfig>? = null
 
-    fun getOld() = old
-    fun getNew() = new
+    fun getBooks() = books
     // Note: getter required to proxy fields
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    class BibleBookConfig : Serializable {
+
+        private val book: String? = null
+        private val chapters: List<BiblePassageConfig>? = null
+
+        fun getBook() = book
+        fun getChapters() = chapters
+
+        companion object {
+            @Serial private val serialVersionUID = 987654321098765432L
+        }
+
+        @JsonIgnoreProperties(ignoreUnknown = true)
+        class BiblePassageConfig : Serializable {
+
+            private val chapter: Int? = null
+            private val title: String? = null
+            private val verseStart: Int? = null
+            private val verseEnd: Int? = null
+
+            fun getChapter() = chapter
+            fun getTitle() = title
+            fun getVerseStart() = verseStart
+            fun getVerseEnd() = verseEnd
+
+            companion object {
+                @Serial private val serialVersionUID = 10645876543987432L
+            }
+        }
+    }
 }
 
 
