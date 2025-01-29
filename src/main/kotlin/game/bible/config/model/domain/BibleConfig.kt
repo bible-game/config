@@ -30,42 +30,53 @@ class BibleConfig : Initialisable {
         private val log: Logger = LoggerFactory.getLogger(BibleConfig::class.java)
     }
 
-    private val books: List<BibleBookConfig>? = null
+    private val testaments: List<BibleTestamentConfig>? = null
 
-    fun getBooks() = books
+    fun getTestaments() = testaments
     // Note: getter required to proxy fields
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    class BibleBookConfig : Serializable {
+    class BibleTestamentConfig : Serializable {
 
-        private val book: String? = null
-        private val chapters: List<BiblePassageConfig>? = null
+        private val name: String? = null
+        private val divisions: List<BibleDivisionConfig>? = null
 
-        fun getBook() = book
-        fun getChapters() = chapters
+        fun getName() = name
+        fun getDivisions() = divisions
 
         companion object {
-            @Serial private val serialVersionUID = 987654321098765432L
+            @Serial private val serialVersionUID = 10645876543987432L
         }
 
         @JsonIgnoreProperties(ignoreUnknown = true)
-        class BiblePassageConfig : Serializable {
+        class BibleDivisionConfig : Serializable {
 
-            private val chapter: Int? = null
-            private val title: String? = null
-            private val verseStart: Int? = null
-            private val verseEnd: Int? = null
+            private val name: String? = null
+            private val books: List<BibleBookConfig>? = null
 
-            fun getChapter() = chapter
-            fun getTitle() = title
-            fun getVerseStart() = verseStart
-            fun getVerseEnd() = verseEnd
+            fun getName() = name
+            fun getBooks() = books
 
             companion object {
-                @Serial private val serialVersionUID = 10645876543987432L
+                @Serial private val serialVersionUID = 7066743554336982L
+            }
+
+            @JsonIgnoreProperties(ignoreUnknown = true)
+            class BibleBookConfig : Serializable {
+
+                private val name: String? = null
+                private val chapters: Int? = null
+
+                fun getName() = name
+                fun getChapters() = chapters
+
+                companion object {
+                    @Serial private val serialVersionUID = 4706367545394827L
+                }
             }
         }
     }
+
 }
 
 
