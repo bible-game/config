@@ -64,9 +64,11 @@ class BibleConfig : Initialisable {
             @JsonIgnoreProperties(ignoreUnknown = true)
             class BibleBookConfig : Serializable {
 
+                private val key: String? = null
                 private val name: String? = null
                 private val chapters: Int? = null
 
+                fun getKey() = key
                 fun getName() = name
                 fun getChapters() = chapters
 
