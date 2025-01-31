@@ -67,10 +67,12 @@ class BibleConfig : Initialisable {
                 private val key: String? = null
                 private val name: String? = null
                 private val chapters: Int? = null
+                private val verses: List<Int>? = null
 
                 fun getKey() = key
                 fun getName() = name
                 fun getChapters() = chapters
+                fun getVerses() = verses
 
                 companion object {
                     @Serial private val serialVersionUID = 4706367545394827L
