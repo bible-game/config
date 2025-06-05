@@ -10,8 +10,6 @@ import java.io.Serializable
 
 /**
  * Bible Configuration
- *
- * @author J. R. Smith
  * @since 13th January 2025
  */
 @Reloadable(
