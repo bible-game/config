@@ -72,7 +72,7 @@ class BibleConfig : Initialisable {
                 fun getName() = name
                 fun getChapters() = chapters
                 fun getVerses() = verses
-                fun getIcons() = verses
+                fun getIcons() = icons
 
                 companion object {
                     @Serial private val serialVersionUID = 4706367545394827L
