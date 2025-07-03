@@ -10,7 +10,6 @@ import java.io.Serializable
 
 /**
  * ChatGPT Configuration
- *
  * @since 30th January 2025
  */
 @Reloadable(
@@ -23,11 +22,13 @@ class ChatGptConfig : Initialisable {
     }
 
     private val apiKey: String? = null
-    private val context: PromptConfig? = null
+    private val preContext: PromptConfig? = null
+    private val postContext: PromptConfig? = null
     private val daily: PromptConfig? = null
 
     fun getApiKey() = apiKey
-    fun getContext() = context
+    fun getPreContext() = preContext
+    fun getPostContext() = postContext
     fun getDaily() = daily
     // Note: this getter is required or proxying this field fails
 
