@@ -47,10 +47,8 @@ class AwsConfig : Initialisable {
     @JsonIgnoreProperties(ignoreUnknown = true)
     class S3 : Serializable {
 
-        private val buckets: Map<String, String> = java.util.HashMap()
-        private val api: Map<String, String> = java.util.HashMap()
+        private val audioBucket: String? = null
 
-        fun getBuckets() = buckets
-        fun getApi() = api
+        fun getAudioBucket() = audioBucket
     }
 }
