@@ -15,7 +15,7 @@ import java.io.Serializable
 @Reloadable(
     prefix = "open-ai",
     path = "\${application.config.dir}")
-class OpenAiConfig : Initialisable {
+class ChatGptConfig : Initialisable {
 
     init {
         log.info("Created [{}]", this.javaClass.name)
@@ -37,7 +37,7 @@ class OpenAiConfig : Initialisable {
     companion object {
         @Serial private val serialVersionUID = 3578565273432319L
 
-        private val log: Logger = LoggerFactory.getLogger(OpenAiConfig::class.java)
+        private val log: Logger = LoggerFactory.getLogger(ChatGptConfig::class.java)
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
