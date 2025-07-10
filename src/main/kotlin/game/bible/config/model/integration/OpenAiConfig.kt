@@ -9,13 +9,13 @@ import java.io.Serial
 import java.io.Serializable
 
 /**
- * ChatGPT Configuration
+ * Open AI Configuration
  * @since 30th January 2025
  */
 @Reloadable(
-    prefix = "chat-gpt",
+    prefix = "open-ai",
     path = "\${application.config.dir}")
-class ChatGptConfig : Initialisable {
+class OpenAiConfig : Initialisable {
 
     init {
         log.info("Created [{}]", this.javaClass.name)
@@ -25,17 +25,19 @@ class ChatGptConfig : Initialisable {
     private val preContext: PromptConfig? = null
     private val postContext: PromptConfig? = null
     private val daily: PromptConfig? = null
+    private val study: PromptConfig? = null
 
     fun getApiKey() = apiKey
     fun getPreContext() = preContext
     fun getPostContext() = postContext
     fun getDaily() = daily
+    fun getStudy() = study
     // Note: this getter is required or proxying this field fails
 
     companion object {
         @Serial private val serialVersionUID = 3578565273432319L
 
-        private val log: Logger = LoggerFactory.getLogger(ChatGptConfig::class.java)
+        private val log: Logger = LoggerFactory.getLogger(OpenAiConfig::class.java)
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
