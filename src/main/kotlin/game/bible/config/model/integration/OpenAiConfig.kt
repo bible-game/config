@@ -9,11 +9,11 @@ import java.io.Serial
 import java.io.Serializable
 
 /**
- * Open AI Configuration
+ * ChatGPT Configuration
  * @since 30th January 2025
  */
 @Reloadable(
-    prefix = "open-ai",
+    prefix = "chat-gpt",
     path = "\${application.config.dir}")
 class ChatGptConfig : Initialisable {
 
