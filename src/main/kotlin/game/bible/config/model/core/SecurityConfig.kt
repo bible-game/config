@@ -19,11 +19,15 @@ import java.io.Serializable
 class SecurityConfig : Initialisable {
 
     private val corsAllowedHost: List<String>? = null
-    private val jwt: Jwt? = null
+    private val domainName: String? = null
+    private val jwts: Map<String, Jwt>? = null
+    private val signingSecret: String? = null
 
     // Note: this getter is required or proxying this field fails
     fun getCorsAllowedHost() = corsAllowedHost
-    fun getJwt() = jwt
+    fun getDomainName() = domainName
+    fun getJwts() = jwts
+    fun getSigningSecret() = signingSecret
 
     init {
         log.info("Created [{}]", this.javaClass.name)
@@ -31,15 +35,13 @@ class SecurityConfig : Initialisable {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     class Jwt : Serializable {
-        private val sessionTimeoutMins: Int? = null
-        private val signingSecret: String? = null
-        private val authTokenHeader: String? = null
+        private val timeoutMins: Int? = null
+        private val tokenHeader: String? = null
         private val cookieDomain: String? = null
         private val cookieName: String? = null
 
-        fun getSessionTimeoutMins() = sessionTimeoutMins
-        fun getSigningSecret() = signingSecret
-        fun getAuthTokenHeader() = authTokenHeader
+        fun getTimeoutMins() = timeoutMins
+        fun getAuthTokenHeader() = tokenHeader
         fun getCookieDomain() = cookieDomain
         fun getCookieName() = cookieName
 
