@@ -1,8 +1,9 @@
 package game.bible.config
 
-import game.bible.config.bean.ConfigBeanRepository
 import game.bible.config.bean.ConfigBeanProcessor
+import game.bible.config.bean.ConfigBeanRepository
 import game.bible.config.model.domain.BibleConfig
+import game.bible.config.model.integration.BollsLifeApiConfig
 import game.bible.config.watcher.ConfigWatcher
 import game.bible.config.watcher.FileWatcherService
 import org.springframework.context.ApplicationEventPublisher
@@ -23,7 +24,8 @@ import org.springframework.context.annotation.Import
     ConfigBeanRepository::class,
     ConfigBeanProcessor::class,
     // Configuration
-    BibleConfig::class
+    BibleConfig::class,
+    BollsLifeApiConfig::class
 )
 class ReloadableConfig {
 
