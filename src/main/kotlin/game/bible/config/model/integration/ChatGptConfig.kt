@@ -27,6 +27,7 @@ class ChatGptConfig : Initialisable {
     private val daily: PromptConfig? = null
     private val study: PromptConfig? = null
     private val golden: PromptConfig? = null
+    private val feedback: PromptConfig? = null
 
     fun getApiKey() = apiKey
     fun getPreContext() = preContext
@@ -34,6 +35,7 @@ class ChatGptConfig : Initialisable {
     fun getDaily() = daily
     fun getStudy() = study
     fun getGolden() = golden
+    fun getFeedback() = feedback
     // Note: this getter is required or proxying this field fails
 
     companion object {
