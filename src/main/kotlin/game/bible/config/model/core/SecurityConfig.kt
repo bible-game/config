@@ -19,10 +19,12 @@ import java.io.Serializable
 class SecurityConfig : Initialisable {
 
     private val corsAllowedHost: List<String>? = null
+    private val passwordReset: PasswordReset? = null
     private val jwt: Jwt? = null
 
     // Note: this getter is required or proxying this field fails
     fun getCorsAllowedHost() = corsAllowedHost
+    fun getPasswordReset() = passwordReset
     fun getJwt() = jwt
 
     init {
@@ -49,9 +51,23 @@ class SecurityConfig : Initialisable {
         }
     }
 
-    companion object {
-        @Serial private val serialVersionUID = 4131124171920030926L
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    class PasswordReset : Serializable {
 
+        private val expireInMins: Long? = null
+
+        fun getExpireInMins() = expireInMins
+
+        companion object {
+            @Serial
+            private const val serialVersionUID: Long = -4586408218691178200L
+        }
+
+    }
+
+    companion object {
+        @Serial
+        private val serialVersionUID = 4131124171920030926L
         private val log: Logger = LoggerFactory.getLogger(SecurityConfig::class.java)
     }
 
