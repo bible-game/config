@@ -48,7 +48,9 @@ class AwsConfig : Initialisable {
     class S3 : Serializable {
 
         private val audioBucket: String? = null
+        private val profileBucket: String? = null
 
         fun getAudioBucket() = audioBucket
+        fun getProfileBucket() = profileBucket
     }
 }
