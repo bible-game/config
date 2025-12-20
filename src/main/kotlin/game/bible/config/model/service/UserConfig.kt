@@ -27,13 +27,15 @@ class UserConfig : Initialisable {
 
     class Communications: Serializable {
 
-        private val sendAddress: String? = null
         private val apiKey: String? = null
+        private val baseUrl: String? = null
         private val secretKey: String? = null
+        private val sendAddress: String? = null
 
-        fun getSendAddress() = sendAddress
         fun getApiKey() = apiKey
+        fun getBaseUrl() = baseUrl
         fun getSecretKey() = secretKey
+        fun getSendAddress() = sendAddress
 
         companion object {
             @Serial
