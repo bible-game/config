@@ -33,11 +33,13 @@ class UserConfig : Initialisable {
         private val baseUrl: String? = null
         private val secretKey: String? = null
         private val sendAddress: String? = null
+        private val templateId: Long? = null
 
         fun getApiKey() = apiKey
         fun getBaseUrl() = baseUrl
         fun getSecretKey() = secretKey
         fun getSendAddress() = sendAddress
+        fun getTemplateId() = templateId
 
         companion object {
             @Serial
