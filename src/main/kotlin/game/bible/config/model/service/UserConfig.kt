@@ -17,8 +17,10 @@ import java.io.Serializable
 )
 class UserConfig : Initialisable {
 
+    private val resetUrl: String? = null
     private val comms: Communications? = null
 
+    fun getResetUrl() = resetUrl
     fun getComms() = comms
 
     init {
