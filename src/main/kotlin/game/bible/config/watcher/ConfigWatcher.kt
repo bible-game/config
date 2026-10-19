@@ -175,8 +175,13 @@ class ConfigWatcher(
     @Throws(IOException::class)
     private fun readConfigurationToObject(configFile: File, filename: String?, prefix: String?, defaults: Serializable?, type: Class<out Serializable?>?): Serializable? {
         val mapper = getMapper(filename)
+        // Resolve ${...} placeholders (env vars, system props, etc.) in the raw file content
+        // before parsing, so secrets can be supplied via environment variables rather than
+        // being committed in plaintext.
+        val rawContent = configFile.readText()
+        val resolvedContent = environment.resolveRequiredPlaceholders(rawContent)
         // We need to get the tree so that we can make sure to read the file from the correct node only
-        var root = mapper.readValue(configFile, JsonNode::class.java)
+        var root = mapper.readValue(resolvedContent, JsonNode::class.java)
         if (StringUtils.isNotBlank(prefix)) {
             log.trace("[readConfigurationToObject] Getting [{}] node from [{}]", prefix, filename)
             root = root!![prefix]
